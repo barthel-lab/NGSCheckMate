@@ -72,14 +72,15 @@ NGSCheckMate paper is now published in [_Nucleic Acids Research_](https://academ
 ```
 cd <installation_dir>
 git clone https://github.com/parklab/NGSCheckMate.git
-
-## set NCM_HOME according to you shell environment 
-## for example, when using bash, add the following in your .bashrc 
-export NCM_HOME=<installation_dir>/NGSCheckMate
 ```
+**NOTE** This doesn't need to set NCM_HOME in your `./bashrc`
+`export NCM_HOME=<installation_dir>/NGSCheckMate`
+
 
 #### 2) Configuration (required only for the BAM module)
 If your input is BAM/VCF files, add the following lines in your ncm.conf file in the package directory. If your input is FASTQ files, you can skip this step.
+
+**NOTE** In this fork, you must create your own `ncm.conf` in the working directory. This approach provides the flexibility of reference FASTA and avoids frequently modifying the dir of software.
 ```
 REF=<path for the reference FASTA file >  
 SAMTOOLS=<path for samtools> 
@@ -89,7 +90,7 @@ BCFTOOLS=<path for bcftools>
 #### Buid for fastq module / patterngenerator
 If you want to build your own fastq module or patterngenerator from source do the following.
 ```
-cd $NCM_HOME
+cd NGSCheckMate
 source install_ncmfastq.sh
 ```
 
