@@ -104,6 +104,8 @@ Additionally, there is a Nextflow subworkflow for use on bam files available as 
 
 ## Usage
 #### 1) BAM/VCF mode
+
+**NOTE** This mode is NOT compatible with samtools v1.21. You shuold move to VCF mode
 ```
 Usage: python ncm.py <-B | -V> <–d INPUT_DIR | -l INPUT_LIST_FILE> <-bed BED_FILE> <–O OUTPUT_DIR> [options]
 ```
@@ -141,12 +143,10 @@ You may need to analyze a large number of large BAM files. For example, you may 
 * STEP1: Generate a VCF file for each BAM file as follows. 
 This step can be parallelized depending on your computing system. For example, the LSF-based system can perform this step in parallel using ‘bsub’ command. 
 
+**NOTE** This fork suggest to use `bcftools mpileup`.
 ```
-# an example for generating sample.vcf from sample.bam mapped to hg19 (after 0.1.19 version)
-samtools mpileup -I -uf hg19.fasta -l SNP_GRCh37_hg19_woChr.bed sample.bam | bcftools call -c - > ./sample.vcf
-  
-# an example for generating sample.vcf from sample.bam mapped to hg19 (0.1.19 version)
-samtools mpileup -I -uf hg19.fasta -l SNP_GRCh37_hg19_woChr.bed sample.bam | bcftools view -cg - > ./sample.vcf
+# an example for generating sample.vcf from sample.bam mapped to reference fasta
+bcftools mpileup -f reference.fa alignments.bam | bcftools call -c -o sample.vcf
 ```
    
 * STEP2: Run NGSCheckMate on the set of VCF files as input.
